@@ -12,5 +12,4 @@ func main() {
 
 	r := routes.SetupRoutes()
 	r.Run(":8080")
-	//adfasdfsadf
 }
