@@ -13,7 +13,7 @@ var DB *gorm.DB
 
 func Connect() {
 	var err error
-	connStr := "host=localhost user=yourusername dbname=delegaciafacil sslmode=disable password=yourpassword"
+	connStr := "host=localhost user=postgres dbname=delegacia_db sslmode=disable password=senha"
 	DB, err = gorm.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal("Failed to connect to database: ", err)
