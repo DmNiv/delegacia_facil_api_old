@@ -1,7 +1,7 @@
 package models
 
 type Delegacia struct {
-	ID         uint    `gorm:"primary_key"`
+	ID         int     `json:"id" gorm:"primary_key"`
 	Nome       string  `json:"nome"`
 	Endereco   string  `json:"endereco"`
 	Tipo       string  `json:"tipo"`
