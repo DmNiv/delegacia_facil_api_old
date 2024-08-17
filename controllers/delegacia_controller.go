@@ -3,8 +3,10 @@ package controllers
 import (
 	"delegaciafacil/configDB"
 	"delegaciafacil/models"
-	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetDelegacias(c *gin.Context) {
@@ -13,22 +15,16 @@ func GetDelegacias(c *gin.Context) {
 	c.JSON(http.StatusOK, delegacias)
 }
 
-func GetDelegaciaByID(c *gin.Context) {
-	id := c.Param("id")
-	var delegacia models.Delegacia
-	if err := configDB.GetDB().First(&delegacia, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Delegacia não encontrada"})
+func GetDelegaciasPorHorario(c *gin.Context) {
+	horario24hStr := c.Query("horario24h")
+	var delegacias []models.Delegacia
+
+	horario24h, err := strconv.ParseBool(horario24hStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Parâmetro 'horario24h' deve ser 'true' ou 'false'"})
 		return
 	}
-	c.JSON(http.StatusOK, delegacia)
-}
 
-//func CreateDelegacia(c *gin.Context) {
-//    var delegacia models.Delegacia
-//    if err := c.ShouldBindJSON(&delegacia); err != nil {
-//        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-//        return
-//    }
-//    configDB.GetDB().Create(&delegacia)
-//    c.JSON(http.StatusCreated, delegacia)
-//}
+	configDB.GetDB().Where("horario24h = ?", horario24h).Find(&delegacias)
+	c.JSON(http.StatusOK, delegacias)
+}
