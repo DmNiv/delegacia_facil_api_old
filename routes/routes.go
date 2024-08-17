@@ -11,10 +11,7 @@ func SetupRoutes() *gin.Engine {
 	delegaciasRoutes := r.Group("/delegacias")
 	{
 		delegaciasRoutes.GET("", controllers.GetDelegacias)
-		// delegaciasRoutes.GET("/:id", controllers.GetDelegaciaByID)
-		// delegaciasRoutes.GET("/horario24h", controllers.GetDelegaciasByHorario)
-		// delegaciasRoutes.GET("/tipo", controllers.GetDelegaciasByTipo)
+		delegaciasRoutes.GET("/:id", controllers.GetDelegaciaByID)
 	}
-
 	return r
 }

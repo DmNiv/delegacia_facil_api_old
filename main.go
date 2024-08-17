@@ -8,9 +8,8 @@ import (
 
 func main() {
 	configDB.Connect()
-	configDB.GetDB().AutoMigrate(&models.Delegacia{}, &models.Tipo{})
-	
+	configDB.GetDB().AutoMigrate(&models.Delegacia{})
+
 	r := routes.SetupRoutes()
 	r.Run(":8080")
 }
-
